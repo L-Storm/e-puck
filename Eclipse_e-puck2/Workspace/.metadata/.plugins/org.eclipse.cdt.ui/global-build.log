@@ -1,0 +1,122 @@
+03:53:40 **** Build of configuration Default for project Blackmagic ****
+make PROBE_HOST=f4discovery all 
+  GIT     include/version.h
+/bin/sh: 1: git: not found
+diff: include/version.h: No such file or directory
+  CC      target/adiv5.c
+  CC      target/adiv5_swdp.c
+  CC      command.c
+  CC      target/cortexa.c
+  CC      target/cortexm.c
+  CC      crc32.c
+  CC      target/efm32.c
+  CC      exception.c
+  CC      platforms/stm32/gdb_if.c
+  CC      gdb_main.c
+  CC      gdb_hostio.c
+  CC      gdb_packet.c
+  CC      hex_utils.c
+  CC      target/lmi.c
+  CC      target/lpc_common.c
+  CC      target/lpc11xx.c
+  CC      target/lpc15xx.c
+  CC      target/lpc43xx.c
+  CC      target/kinetis.c
+  CC      main.c
+  CC      morse.c
+  CC      target/nrf51.c
+  CC      platforms/f4discovery/platform.c
+  CC      target/sam3x.c
+  CC      target/sam4l.c
+  CC      target/samd.c
+  CC      target/stm32f1.c
+  CC      target/stm32f4.c
+  CC      target/stm32l0.c
+  CC      target/stm32l4.c
+  CC      platforms/common/swdptap.c
+  CC      target/swdptap_generic.c
+  CC      target/target.c
+  CC      platforms/common/cdcacm.c
+  CC      platforms/stm32/traceswo.c
+  CC      platforms/stm32/usbuart.c
+  CC      platforms/stm32/serialno.c
+  CC      platforms/common/timing.c
+  CC      platforms/stm32/timing_stm32.c
+  CC      target/adiv5_jtagdp.c
+  CC      target/jtag_scan.c
+  CC      platforms/stm32/jtagtap.c
+  CC      target/jtagtap_generic.c
+  LD      blackmagic
+  OBJCOPY blackmagic.bin
+03:54:21 **** Clean-only build of configuration Default for project Blackmagic ****
+make PROBE_HOST=f4discovery clean 
+  CLEAN
+06:01:30 **** Build of configuration Default for project TP2_Move_correction ****
+make all 
+> Compiling main.c
+arm-none-eabi-gcc -c -mcpu=cortex-m4 -O0 -ggdb -fomit-frame-pointer -falign-functions=16 -ffunction-sections -fdata-sections -fno-common -Wall -Wextra -Wundef -Wstrict-prototypes -DSTM32F4 -DSTM32F407xx -mthumb -mno-thumb-interwork -MD -MP -I. -I../ST main.c -o main.o
+> Compiling gpio.c
+arm-none-eabi-gcc -c -mcpu=cortex-m4 -O0 -ggdb -fomit-frame-pointer -falign-functions=16 -ffunction-sections -fdata-sections -fno-common -Wall -Wextra -Wundef -Wstrict-prototypes -DSTM32F4 -DSTM32F407xx -mthumb -mno-thumb-interwork -MD -MP -I. -I../ST gpio.c -o gpio.o
+> Compiling timer.c
+arm-none-eabi-gcc -c -mcpu=cortex-m4 -O0 -ggdb -fomit-frame-pointer -falign-functions=16 -ffunction-sections -fdata-sections -fno-common -Wall -Wextra -Wundef -Wstrict-prototypes -DSTM32F4 -DSTM32F407xx -mthumb -mno-thumb-interwork -MD -MP -I. -I../ST timer.c -o timer.o
+> Compiling motor.c
+arm-none-eabi-gcc -c -mcpu=cortex-m4 -O0 -ggdb -fomit-frame-pointer -falign-functions=16 -ffunction-sections -fdata-sections -fno-common -Wall -Wextra -Wundef -Wstrict-prototypes -DSTM32F4 -DSTM32F407xx -mthumb -mno-thumb-interwork -MD -MP -I. -I../ST motor.c -o motor.o
+> Compiling selector.c
+arm-none-eabi-gcc -c -mcpu=cortex-m4 -O0 -ggdb -fomit-frame-pointer -falign-functions=16 -ffunction-sections -fdata-sections -fno-common -Wall -Wextra -Wundef -Wstrict-prototypes -DSTM32F4 -DSTM32F407xx -mthumb -mno-thumb-interwork -MD -MP -I. -I../ST selector.c -o selector.o
+> Compiling system_clock_config.c
+arm-none-eabi-gcc -c -mcpu=cortex-m4 -O0 -ggdb -fomit-frame-pointer -falign-functions=16 -ffunction-sections -fdata-sections -fno-common -Wall -Wextra -Wundef -Wstrict-prototypes -DSTM32F4 -DSTM32F407xx -mthumb -mno-thumb-interwork -MD -MP -I. -I../ST ../ST/system_clock_config.c -o ../ST/system_clock_config.o
+> Compiling stm32f4xx_ll_rcc.c
+arm-none-eabi-gcc -c -mcpu=cortex-m4 -O0 -ggdb -fomit-frame-pointer -falign-functions=16 -ffunction-sections -fdata-sections -fno-common -Wall -Wextra -Wundef -Wstrict-prototypes -DSTM32F4 -DSTM32F407xx -mthumb -mno-thumb-interwork -MD -MP -I. -I../ST ../ST/stm32f4xx_ll_rcc.c -o ../ST/stm32f4xx_ll_rcc.o
+> Compiling system_stm32f4xx.c
+arm-none-eabi-gcc -c -mcpu=cortex-m4 -O0 -ggdb -fomit-frame-pointer -falign-functions=16 -ffunction-sections -fdata-sections -fno-common -Wall -Wextra -Wundef -Wstrict-prototypes -DSTM32F4 -DSTM32F407xx -mthumb -mno-thumb-interwork -MD -MP -I. -I../ST ../ST/system_stm32f4xx.c -o ../ST/system_stm32f4xx.o
+> Compiling startup_stm32f407xx.s
+arm-none-eabi-gcc -x assembler-with-cpp -c -mcpu=cortex-m4 -mthumb -mno-thumb-interwork -I. -I../ST ../ST/startup_stm32f407xx.s -o ../ST/startup_stm32f407xx.o
+> Linking move.elf
+arm-none-eabi-gcc main.o gpio.o timer.o motor.o selector.o ../ST/system_clock_config.o ../ST/stm32f4xx_ll_rcc.o ../ST/system_stm32f4xx.o ../ST/startup_stm32f407xx.o  -mcpu=cortex-m4 -O0 -ggdb -fomit-frame-pointer -falign-functions=16 -ffunction-sections -fdata-sections -fno-common -nostartfiles  -mthumb -mno-thumb-interwork -Wl,--no-warn-mismatch,--gc-sections,--script=../ST/STM32F407VGTx_FLASH.ld  -o move.elf
+> Creating move.list
+arm-none-eabi-objdump -d move.elf > move.list
+> Creating move.size
+arm-none-eabi-nm --size-sort --print-size move.elf > move.size
+> Creating move.mem
+arm-none-eabi-nm --numeric-sort --print-size move.elf > move.mem
+arm-none-eabi-size move.elf
+   text	   data	    bss	    dec	    hex	filename
+   5532	      4	   1556	   7092	   1bb4	move.elf
+> Done
+06:01:44 **** Incremental Build of configuration Default for project TP2_Move_correction ****
+make all 
+arm-none-eabi-size move.elf
+   text	   data	    bss	    dec	    hex	filename
+   5532	      4	   1556	   7092	   1bb4	move.elf
+> Done
+06:03:52 **** Incremental Build of configuration Default for project TP2_Move_correction ****
+make all 
+arm-none-eabi-size move.elf
+   text	   data	    bss	    dec	    hex	filename
+   5532	      4	   1556	   7092	   1bb4	move.elf
+> Done
+06:04:07 **** Incremental Build of configuration Default for project TP2_Move_correction ****
+make all 
+arm-none-eabi-size move.elf
+   text	   data	    bss	    dec	    hex	filename
+   5532	      4	   1556	   7092	   1bb4	move.elf
+> Done
+06:04:33 **** Incremental Build of configuration Default for project TP2_Move_correction ****
+make all 
+arm-none-eabi-size move.elf
+   text	   data	    bss	    dec	    hex	filename
+   5532	      4	   1556	   7092	   1bb4	move.elf
+> Done
+06:04:59 **** Incremental Build of configuration Default for project TP2_Move_correction ****
+make all 
+arm-none-eabi-size move.elf
+   text	   data	    bss	    dec	    hex	filename
+   5532	      4	   1556	   7092	   1bb4	move.elf
+> Done
+06:05:39 **** Clean-only build of configuration Default for project TP2_Move_correction ****
+make clean 
+> Cleaning
+rm -f main.o gpio.o timer.o motor.o selector.o ../ST/system_clock_config.o ../ST/stm32f4xx_ll_rcc.o ../ST/system_stm32f4xx.o ../ST/startup_stm32f407xx.o
+rm main.d gpio.d timer.d motor.d selector.d ../ST/system_clock_config.d ../ST/stm32f4xx_ll_rcc.d ../ST/system_stm32f4xx.d
+rm -f move.elf move.list move.size move.mem
+> Done
