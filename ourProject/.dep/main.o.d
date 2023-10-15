@@ -136,7 +136,9 @@ build/obj/main.o: main.c \
  ../e-puck2_main-processor/src/msgbus/messagebus.h \
  /home/lloyd/repos/epuck/Eclipse_e-puck2/Tools/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/unistd.h \
  /home/lloyd/repos/epuck/Eclipse_e-puck2/Tools/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/unistd.h \
- ../e-puck2_main-processor/src/parameter/parameter.h
+ ../e-puck2_main-processor/src/parameter/parameter.h \
+ ../e-puck2_main-processor/src/leds.h \
+ ../e-puck2_main-processor/src/spi_comm.h
 
 /home/lloyd/repos/epuck/Eclipse_e-puck2/Tools/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/stdio.h:
 
@@ -415,3 +417,7 @@ main.h:
 /home/lloyd/repos/epuck/Eclipse_e-puck2/Tools/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/unistd.h:
 
 ../e-puck2_main-processor/src/parameter/parameter.h:
+
+../e-puck2_main-processor/src/leds.h:
+
+../e-puck2_main-processor/src/spi_comm.h:
