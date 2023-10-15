@@ -1177,3 +1177,26 @@ Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp
 
 !ENTRY org.eclipse.e4.ui.workbench 2 0 2020-08-14 13:49:47.757
 !MESSAGE Removing PartDescriptorImpl with the "org.eclipse.tracecompass.lttng2.analysis.vm.ui.vmview" id and the "Virtual CPU View (Deprecated)" label.It points to the non available "bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" class. Bundle might have been uninstalled
+!SESSION 2023-10-15 14:02:42.458 -----------------------------------------------
+eclipse.buildId=4.16.0.I20200604-0540
+java.version=1.8.0_382
+java.vendor=Private Build
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_GB
+Framework arguments:  -product org.eclipse.epp.package.cpp.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.cpp.product -data Workspace
+
+!ENTRY org.eclipse.cdt.core 1 0 2023-10-15 14:04:31.067
+!MESSAGE Indexed 'ourProject' (1 sources, 1 headers) in 1.12 sec: 7 declarations; 9 references; 9 unresolved inclusions; 0 syntax errors; 3 unresolved names (16%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2023-10-15 14:38:29.785
+!MESSAGE Indexed 'ourProject' (390 sources, 227 headers) in 6.86 sec: 19,948 declarations; 88,341 references; 181 unresolved inclusions; 132 syntax errors; 2,672 unresolved names (2.4%)
+!SESSION 2023-10-15 17:20:21.051 -----------------------------------------------
+eclipse.buildId=4.16.0.I20200604-0540
+java.version=1.8.0_382
+java.vendor=Private Build
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_GB
+Framework arguments:  -product org.eclipse.epp.package.cpp.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.cpp.product -data Workspace
+
+!ENTRY org.eclipse.core.resources 2 10035 2023-10-15 17:20:23.710
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
