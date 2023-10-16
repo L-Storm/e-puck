@@ -7,7 +7,8 @@
 #include "hal.h"
 #include "memory_protection.h"
 #include <main.h>
-
+#include "leds.h"
+#include "spi_comm.h"
 
 int main(void)
 {
@@ -16,11 +17,16 @@ int main(void)
     chSysInit();
     mpu_init();
 
+    void clear_leds(void);
+    void spi_comm_start(void);
+
 
     /* Infinite loop. */
     while (1) {
-    	//waits 1 second
+    	unsigned int ledValue = 2;  // or any other non-negative integer value
+    	set_body_led(ledValue);
         chThdSleepMilliseconds(1000);
+
     }
 }
 
