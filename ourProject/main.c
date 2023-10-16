@@ -9,6 +9,8 @@
 #include <main.h>
 #include "leds.h"
 #include "spi_comm.h"
+#include "selector.h"
+#include "motors.h"
 
 int main(void)
 {
@@ -17,17 +19,29 @@ int main(void)
     chSysInit();
     mpu_init();
 
+
+
     void clear_leds(void);
     void spi_comm_start(void);
+    int get_selector(void);
+    void motors_init(void);
 
 
-    /* Infinite loop. */
-    while (1) {
-    	unsigned int ledValue = 2;  // or any other non-negative integer value
+ 	unsigned int ledValue = 2;// or any other non-negative integer value
+    	for (int i=0;i<=5;i++){
     	set_body_led(ledValue);
+    	if(get_selector() == 4) {
+    		int b = -i;
+    		void left_motor_set_speed(i);
+    		void right_motor_set_speed(b);
+    	}
         chThdSleepMilliseconds(1000);
+    	}
 
-    }
+//    /* Infinite loop. */
+//    while (1) {
+//
+//    }
 }
 
 #define STACK_CHK_GUARD 0xe2dee396
