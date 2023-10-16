@@ -23,20 +23,21 @@ int main(void)
     mpu_init();
 
 //    LEDS
-    void clear_leds(void);
-    void spi_comm_start(void);
+    clear_leds();
+    spi_comm_start();
 
 //    MOTORS
-    void motors_init(void);
+    motors_init();
 
+int i;
+int motorForward = 500;
+int motorBack = -500;
+int motorStop = 0;
 
     /* Infinite loop. */
     while (1) {
 
-    	int i
-		int motorForward = 500;
-    	int motorBack = -500;
-    	int motorStop = 0;
+
 
     	for(i=1; i<=4; i++){
         	unsigned int ledValue = 2;  // or any other non-negative integer value
@@ -45,13 +46,13 @@ int main(void)
     	}
 
 
-    	void left_motor_set_speed(motorForward);
-    	void right_motor_set_speed(MotorBack);
+    	left_motor_set_speed(motorForward);
+    	right_motor_set_speed(motorBack);
 
         chThdSleepMilliseconds(4000);
 
-    	void left_motor_set_speed(motorStop);
-    	void right_motor_set_speed(MotorStop);
+    	left_motor_set_speed(motorStop);
+    	right_motor_set_speed(motorStop);
     }
 }
 
