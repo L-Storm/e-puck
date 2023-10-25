@@ -6,11 +6,11 @@
 #include "ch.h"
 #include "hal.h"
 #include "memory_protection.h"
-#include "sensors/proximity.h"
+//#include "sensors/proximity.h"
 #include <main.h>
 
 //LEDS
-#include "leds.h"
+//#include "leds.h"
 #include "spi_comm.h"
 
 //MOTORS
@@ -24,6 +24,8 @@ void avoid_collisions(unsigned int noiseLevel, unsigned int activationThreshold,
 	int i;
 	int outputLeftVelocity = inputLeftVelocity;
 	int outputRightVelocity = inputRightVelocity;
+	int* outputRightVelocityPtr = &outputRightVelocity;
+	int* outputLeftVelocityPtr = &outputLeftVelocity;
 	unsigned int sensorValues[8];
 	double xWeights[] = {-1, -0.7, 0, 0.9, 0.9, 0, -0.7, -1};
 	double yWeights[] = {0.3, 0.7, 1, 0.5, -0.5, -1, -0.7, -0.3};
@@ -41,21 +43,26 @@ void avoid_collisions(unsigned int noiseLevel, unsigned int activationThreshold,
 
 	// Modify the velocity components based on sensor values.
 	if(inputLeftVelocity >= 0) {
-		outputLeftVelocity += ((xSensorTotal * 0.5) - (ySensorTotal * 0.25));
+		outputLeftVelocity += ((xSensorTotal * 0.8) - (ySensorTotal * 0.5));
 	} else {
-		outputLeftVelocity -= ((xSensorTotal * 0.5) + (ySensorTotal * 0.25));
+		outputLeftVelocity -= ((xSensorTotal * 0.8) + (ySensorTotal * 0.5));
 	}
 	if(inputRightVelocity >= 0) {
-		outputRightVelocity += ((xSensorTotal * 0.51) + (ySensorTotal * 0.25));
+		outputRightVelocity += ((xSensorTotal * 0.8) + (ySensorTotal * 0.5));
 	} else {
-		outputRightVelocity -= ((xSensorTotal * 0.5) - (ySensorTotal * 0.25));
+		outputRightVelocity -= ((xSensorTotal * 0.8) - (ySensorTotal * 0.5));
 	}
+
+
 
 	// Update speed.
 	left_motor_set_speed(outputLeftVelocity);
 	right_motor_set_speed(outputRightVelocity);
 }
 
+void check_stationary() {
+	if outputRightVelocityPtr = 0;
+}
 
 int main(void)
 {
@@ -64,8 +71,11 @@ int main(void)
     chSysInit();
     mpu_init();
 
-    // sensors
+    spi_comm_start();
+
+    // prox sensors
     messagebus_init(&bus, &bus_lock, &bus_condvar);
+    proximity_start();
     calibrate_ir();
 
 //    MOTORS
@@ -73,13 +83,17 @@ int main(void)
 
 
     //move forward
-	int motorForward = 500;
+	int motorForward = 1000;
     left_motor_set_speed(motorForward);
     right_motor_set_speed(motorForward);
 
     /* Infinite loop. continuously avoid obstacles */
     while (1) {
-    	avoid_collisions(5, 300, motorForward, motorForward);
+    	avoid_collisions(5, 150, motorForward, motorForward);
+    	chThdSleepMilliseconds(100);
+
+
+
     }
 }
 
