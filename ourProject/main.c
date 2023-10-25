@@ -20,12 +20,24 @@ messagebus_t bus;
 MUTEX_DECL(bus_lock);
 CONDVAR_DECL(bus_condvar);
 
+#define ROTATE_MODE 1
+#define NAVIGATE_MODE 2
+
+
+int mode;
+int mode = NAVIGATE_MODE;
+int outputRightVelocity;
+int outputLeftVelocity;
+int* outputRightVelocityPtr = &outputRightVelocity;
+int* outputLeftVelocityPtr = &outputLeftVelocity;
+
+
 void avoid_collisions(unsigned int noiseLevel, unsigned int activationThreshold, int inputLeftVelocity, int inputRightVelocity) {
+	/* avoid collisions using a vector sum calculation from all 8 proximaty sensors. */
+
 	int i;
-	int outputLeftVelocity = inputLeftVelocity;
-	int outputRightVelocity = inputRightVelocity;
-	int* outputRightVelocityPtr = &outputRightVelocity;
-	int* outputLeftVelocityPtr = &outputLeftVelocity;
+	outputLeftVelocity = inputLeftVelocity;
+	outputRightVelocity = inputRightVelocity;
 	unsigned int sensorValues[8];
 	double xWeights[] = {-1, -0.7, 0, 0.9, 0.9, 0, -0.7, -1};
 	double yWeights[] = {0.3, 0.7, 1, 0.5, -0.5, -1, -0.7, -0.3};
@@ -61,39 +73,96 @@ void avoid_collisions(unsigned int noiseLevel, unsigned int activationThreshold,
 }
 
 void check_stationary() {
-	if outputRightVelocityPtr = 0;
+	/* Function records into a buffer the last 10 wheel speeds
+	 * for both wheels. Then if below a threshold, will change
+	 * from NAVIGATION_MODE to ROTATE_MODE. */
+	unsigned int lastRotation = 11;
+    unsigned int i2 = 0;
+    unsigned int sum;
+    unsigned int currentSpeeds[10][2]; // 2D array for circular buffer
+
+    // Get currentSpeedValue
+    int currentSpeedRight = abs(*outputRightVelocityPtr);
+    int currentSpeedLeft = abs(*outputLeftVelocityPtr);
+
+
+    // Update circular buffer.
+    currentSpeeds[i2][0] = currentSpeedLeft;
+    currentSpeeds[i2][1] = currentSpeedRight;
+
+    sum = 0;
+    for (int i = 0; i < 10; ++i) {
+        for (int j = 0; j < 2; ++j) {
+            sum += currentSpeeds[i][j];
+        }
+    }
+
+    // if stationary, rotate.
+    if (sum < 400 && lastRotation != i2 ) {
+    	mode = ROTATE_MODE;
+    	lastRotation = i2;
+    }
+
+    // Update index i (circular manner)
+	i2 = i2++;
+	i2 % 10;
+
+    return;
 }
+
+void rotate(int speed, int time) {
+
+	left_motor_set_speed(speed);
+	right_motor_set_speed(-speed);
+
+	chThdSleepMilliseconds(time);
+
+	left_motor_set_speed(0);
+	right_motor_set_speed(0);
+
+	mode = NAVIGATE_MODE;
+
+}
+
+
 
 int main(void)
 {
-
+	//LITERALLY CAN'T REMEMBER WHAT THESE DO
     halInit();
     chSysInit();
     mpu_init();
-
+    //LEDS?
     spi_comm_start();
-
-    // prox sensors
+    // PROX SENSORS
     messagebus_init(&bus, &bus_lock, &bus_condvar);
     proximity_start();
     calibrate_ir();
-
-//    MOTORS
+    // MOTORS
     motors_init();
 
-
-    //move forward
-	int motorForward = 1000;
+    //constantly move forward.
+	const int motorForward = 1000;
     left_motor_set_speed(motorForward);
     right_motor_set_speed(motorForward);
 
-    /* Infinite loop. continuously avoid obstacles */
+    /* Infinite loop. continuously avoid obstacles unless stuck, then turn.*/
     while (1) {
-    	avoid_collisions(5, 150, motorForward, motorForward);
-    	chThdSleepMilliseconds(100);
 
-
-
+    	switch (mode) {
+    	    case ROTATE_MODE:
+				rotate(500,300);
+    	        break;
+    	    case NAVIGATE_MODE:
+    	    	avoid_collisions(5, 150, motorForward, motorForward);
+				chThdSleepMilliseconds(100);
+				check_stationary();
+    	        break;
+    	    default:
+    	    	chThdSleepMilliseconds(100);
+    	    	break;
+    	        // code to be executed if expression doesn't match any constant
+    	}
     }
 }
 
