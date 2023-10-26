@@ -98,9 +98,16 @@ void check_stationary() {
     }
 
     // if stationary, rotate.
-    if (sum < 400 && lastRotation != i2 ) {
+    if (sum < 400) {
     	mode = ROTATE_MODE;
     	lastRotation = i2;
+
+        for (int i = 0; i < 10; ++i) {
+            for (int j = 0; j < 2; ++j) {
+                currentSpeeds[i][j] = 100;
+            }
+        }
+
     }
 
     // Update index i (circular manner)
