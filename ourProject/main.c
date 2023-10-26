@@ -55,14 +55,14 @@ void avoid_collisions(unsigned int noiseLevel, unsigned int activationThreshold,
 
 	// Modify the velocity components based on sensor values.
 	if(inputLeftVelocity >= 0) {
-		outputLeftVelocity += ((xSensorTotal * 0.8) - (ySensorTotal * 0.5));
+		outputLeftVelocity += ((xSensorTotal) - (ySensorTotal * 0.6));
 	} else {
-		outputLeftVelocity -= ((xSensorTotal * 0.8) + (ySensorTotal * 0.5));
+		outputLeftVelocity -= ((xSensorTotal) + (ySensorTotal * 0.6));
 	}
 	if(inputRightVelocity >= 0) {
-		outputRightVelocity += ((xSensorTotal * 0.8) + (ySensorTotal * 0.5));
+		outputRightVelocity += ((xSensorTotal) + (ySensorTotal * 0.6));
 	} else {
-		outputRightVelocity -= ((xSensorTotal * 0.8) - (ySensorTotal * 0.5));
+		outputRightVelocity -= ((xSensorTotal) - (ySensorTotal * 0.6));
 	}
 
 
@@ -71,15 +71,15 @@ void avoid_collisions(unsigned int noiseLevel, unsigned int activationThreshold,
 	left_motor_set_speed(outputLeftVelocity);
 	right_motor_set_speed(outputRightVelocity);
 }
-
+unsigned int currentSpeeds[10][2]; // 2D array for circular buffer
+unsigned int i2 = 0;
 void check_stationary() {
 	/* Function records into a buffer the last 10 wheel speeds
 	 * for both wheels. Then if below a threshold, will change
 	 * from NAVIGATION_MODE to ROTATE_MODE. */
-	unsigned int lastRotation = 11;
-    unsigned int i2 = 0;
+
     unsigned int sum;
-    unsigned int currentSpeeds[10][2]; // 2D array for circular buffer
+
 
     // Get currentSpeedValue
     int currentSpeedRight = abs(*outputRightVelocityPtr);
@@ -98,9 +98,8 @@ void check_stationary() {
     }
 
     // if stationary, rotate.
-    if (sum < 400) {
+    if (sum < 800) {
     	mode = ROTATE_MODE;
-    	lastRotation = i2;
 
         for (int i = 0; i < 10; ++i) {
             for (int j = 0; j < 2; ++j) {
@@ -111,8 +110,7 @@ void check_stationary() {
     }
 
     // Update index i (circular manner)
-	i2 = i2++;
-	i2 % 10;
+    i2 = (i2 + 1) % 10;
 
     return;
 }
@@ -149,7 +147,7 @@ int main(void)
     motors_init();
 
     //constantly move forward.
-	const int motorForward = 1000;
+	const int motorForward = 900;
     left_motor_set_speed(motorForward);
     right_motor_set_speed(motorForward);
 
@@ -158,10 +156,10 @@ int main(void)
 
     	switch (mode) {
     	    case ROTATE_MODE:
-				rotate(500,300);
+				rotate(700,800);
     	        break;
     	    case NAVIGATE_MODE:
-    	    	avoid_collisions(5, 150, motorForward, motorForward);
+    	    	avoid_collisions(5, 100, motorForward, motorForward);
 				chThdSleepMilliseconds(100);
 				check_stationary();
     	        break;
