@@ -15,6 +15,10 @@
 
 //MOTORS
 #include "motors.h"
+//SOUND
+#include "audio/audio_thread.h"
+#include "audio/play_melody.h"
+#include "audio/play_sound_file.h"
 
 messagebus_t bus;
 MUTEX_DECL(bus_lock);
@@ -146,10 +150,18 @@ int main(void)
     // MOTORS
     motors_init();
 
+    //SOUND
+    dac_start();
+    playSoundFileStart();
+    playMelodyStart();
+
     //constantly move forward.
 	const int motorForward = 900;
     left_motor_set_speed(motorForward);
     right_motor_set_speed(motorForward);
+
+    //play mario
+    playMelody(MARIO, ML_FORCE_CHANGE, NULL);
 
     /* Infinite loop. continuously avoid obstacles unless stuck, then turn.*/
     while (1) {
