@@ -26,17 +26,15 @@ int prox_sensor(int sensors_average[]) {
 	 a method for returning the sensor number for the closest sensor to the object.
 	 relying on the highest reading being the cloest value.
 	 */
-	for (int i = 0; i < 8; i++) {
-		int count = 0;
-		for (int j = 0; j < 8; j++) {
-			if (sensors_average[i] > sensors_average[j]) {
-				count++;
-				if (count == 7)
-					return i + 1;
-			}
+	int largestIndex = 0;
+
+	for (int i = 1; i < 8; i++) {
+		if (sensors_average[i] > sensors_average[largestIndex]) {
+			largestIndex = i;
 		}
 	}
-	return 0;
+
+	return largestIndex;
 }
 
 void distance(uint16_t val) {
