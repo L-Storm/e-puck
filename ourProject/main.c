@@ -122,21 +122,25 @@ int main(void) {
 			} else if (dist < 30) {
 				set_motor_speed(-speed, -speed);
 				distance(dist);
+			} else if (dist >= 30 && dist <= 60) {
+				set_motor_speed(0, 0);
+				distance(dist);
 			}
+
 		} else {
 			// find object from long distance code here!
 			unsigned int intervalMax = 20;
 			unsigned int intervalCount = 0;
 			int rotationTime = 200;
 			int rotationSpeed = 200;
-			int cloestObject = 2000;
+			int closestObject = 2000;
 			unsigned int intervalsToClosestObject;
 
 			while (intervalCount < intervalMax) {
-				rotate(roationSpeed, rotationTime);
+				rotate(rotationSpeed, rotationTime);
 				uint16_t distance = VL53L0X_get_dist_mm();
-				if (distance < cloestObject) {
-					cloestObject = distance;
+				if (distance < closestObject) {
+					closestObject = distance;
 					intervalsToClosestObject = intervalCount;
 				}
 				intervalCount++;
