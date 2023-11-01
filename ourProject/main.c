@@ -100,11 +100,11 @@ int main(void) {
 		//determine nearest sensor.
 		int nearest = prox_sensor(sensors);
 
-		if (nearest >= 1 && nearest <= 4) {
+		if (nearest >= 1 && nearest <= 3) {
 			set_motor_speed(speed, -speed);
 			set_front_led(0);
 			set_body_led(1);
-		} else if (nearest >= 5 && nearest <= 6) {
+		} else if (nearest >= 4 && nearest <= 6) {
 			set_motor_speed(-speed, speed);
 			set_front_led(0);
 			set_body_led(1);
@@ -114,7 +114,7 @@ int main(void) {
 			set_body_led(0);
 			if (dist > 60 && dist < 100) {
 				// define speed as non constant so that robot can avoid oscillations.
-				set_motor_speed(12.5 * dist - 725, 12.5 * dist - 725);
+				set_motor_speed(speed, speed);
 				distance(dist);
 			} else if (dist > 100) {
 				set_motor_speed(+speed, +speed);
@@ -127,29 +127,6 @@ int main(void) {
 				distance(dist);
 			}
 
-		} else {
-			// find object from long distance code here!
-			unsigned int intervalMax = 20;
-			unsigned int intervalCount = 0;
-			int rotationTime = 200;
-			int rotationSpeed = 200;
-			int closestObject = 2000;
-			unsigned int intervalsToClosestObject;
-
-			while (intervalCount < intervalMax) {
-				rotate(rotationSpeed, rotationTime);
-				uint16_t distance = VL53L0X_get_dist_mm();
-				if (distance < closestObject) {
-					closestObject = distance;
-					intervalsToClosestObject = intervalCount;
-				}
-				intervalCount++;
-			}
-
-			rotate(-rotationSpeed, rotationTime * intervalsToClosestObject);
-
-			set_motor_speed(speed, speed);
-			chThdSleepMilliseconds(1000);
 		}
 	}
 }
